@@ -4,6 +4,7 @@ eqtl_file <- args[2]
 outfolder <- args[3]
 type <- args[4] #"cc" or "quant"
 NT <- as.numeric(args[5])
+cores <- as.numeric(args[6])
 NC <- NT/2 
 p12 <- 1e-6
 
@@ -28,6 +29,6 @@ names(eqtl.df)[which(names(eqtl.df)=="se.beta")] <- "SE"
 
 
 # If this takes too long, submit one script per gene by specifying character vector for list.probes
-coloc2 <- coloc.eqtl.biom(eqtl.df=eqtl.df, biom.df=biom.df, p12=p12, useBETA=TRUE, outfolder="outfolder", prefix="", plot=FALSE, save.coloc.output=FALSE, match_snpid=T)
+coloc2 <- coloc.eqtl.biom(eqtl.df=eqtl.df, biom.df=biom.df, p12=p12, useBETA=TRUE, cores=cores, outfolder=outfolder, prefix="", plot=FALSE, save.coloc.output=FALSE, match_snpid=T)
 #coloc.eqtl.biom(merged.data, list.probes=NULL, useBETA=TRUE, outfolder, prefix= prefix, min_snps=50, p1=1e-4, p2=1e-4, p12=1e-6, moloc=FALSE)
 

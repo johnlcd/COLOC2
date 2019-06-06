@@ -1,0 +1,60 @@
+#!/bin/bash
+#########################################################################
+# File Name: Coloc2_parallel
+# Author: CJB
+# mail: johnlcd@stu.xjtu.edu.cn
+# Created Time: Thu Jun  6 18:12:50 CST 2019
+#########################################################################
+
+
+if [ $# == "12" ] && [ ${1} == "-g" ] && [ ${3} == "-e" ] && [ ${5} == "-o" ] && [ ${7} == "-t" ] && [ ${9} == "-n" ] && [ ${11} == "-c" ]
+then
+
+	gwas_file=${2}
+	eqtl_file=${4}
+	outfile=${6}
+	TP=${8}
+	NT=${10}
+	cores=${12}
+
+	DAT=`date | sed 's/ /_/g'`
+	log=${outfile}_${DAT}.run.COLOC2.log
+	echo ">>> Start to run COLOC2 ==> ==> ==> " > ${log}
+	echo "    Time is: ${DAT}" >> ${log}
+	CMD="nohup Rcmd BATCH --slave \"--args ${gwas_file} ${eqtl_file} ${outfile} ${TP} ${NT} ${cores}\" /home/chenjiabin/tools/COLOC2/run_Coloc2.R ${log}"
+	echo ">>> Command: " >> ${log}
+	echo "    ${CMD}" | sed 's/nohup //g' >> ${log}
+	echo ${CMD} | parallel -j 1
+	echo ">>> Runing of COLOC2 finished, output result: " >> ${log}
+	echo "    ${outfile}" >> ${log}
+	
+
+else \
+
+	echo ======================================
+	
+	echo " "
+	echo USAGE:
+	echo " "
+	echo " $0 -g <gwas_file> -e <eqtl_file> -o <outfile prefix> -t <type of phenotype (\"cc\", \"quangt\")> -n <sample number> -c <cores> "
+	echo " "
+	
+	echo --------------------------------------
+	
+	echo " "
+	echo EXAMPLEs:
+	echo " "
+	echo " $0 -g GWAS.anno -e eQTL.anno -o result -t quant -n 10000 -c 20 "
+	echo " "
+	
+	echo ======================================
+	
+	echo " "
+	echo Command is: $0 $*
+	echo " "
+
+fi
+
+
+## END
+
