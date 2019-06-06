@@ -5,7 +5,7 @@ outfolder <- args[3]
 type <- args[4] #"cc" or "quant"
 NT <- as.numeric(args[5])
 NC <- NT/2 
-
+p12 <- 1e-6
 
 source("/home/chenjiabin/tools/COLOC2/coloc_functions.R")
 source("/home/chenjiabin/tools/COLOC2/functions_coloc_likelihood_summary_integrated.R")
