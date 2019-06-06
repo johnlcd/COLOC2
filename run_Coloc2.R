@@ -2,7 +2,7 @@ args <- commandArgs(trailingOnly=TRUE)
 gwas_file <- args[1]
 eqtl_file <- args[2]
 outfolder <- args[3]
-TP=args[4] #"cc" or "quant"
+type <- args[4] #"cc" or "quant"
 NT <- as.numeric(args[5])
 NC <- NT/2 
 
@@ -11,9 +11,10 @@ source("/home/chenjiabin/tools/COLOC2/coloc_functions.R")
 source("/home/chenjiabin/tools/COLOC2/functions_coloc_likelihood_summary_integrated.R")
 library(data.table)
 
-biom.df <- formatColoc(fname = gwas_file, type=TP, N=NT, Ncases=NC, info_filter=0.6, maf_filter=0.05, fread=T, eqtl=FALSE)
-eqtl.df <- formatColoc(fname = eqtl_file, type="quant", N=NT, Ncases=NA, info_filter=0.6, maf_filter=0.05, fread=T, eqtl=TRUE)
-biom.df$type <- TP
+biom.df <- formatColoc(fname = gwas_file, type=type, N=NT, Ncases=NC, info_filter=0.6, maf_filter=0.05, fread=T, eqtl=FALSE)
+eqtl.df <- formatColoc(fname = eqtl_file, type=type, N=NT, Ncases=NA, info_filter=0.6, maf_filter=0.05, fread=T, eqtl=TRUE)
+biom.df$type <- type
+eqtl.df$type <- type
 #eqtl.df$MAF <- 0.5
 
 #names(biom.df) = c("CHR", "POS", "SNP", "N", "A1", "A2", "Z", "BETA", "SE", "N_CONTROLS")
